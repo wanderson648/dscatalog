@@ -1,15 +1,15 @@
 package com.devsuperior.auladev.resources;
 
 import com.devsuperior.auladev.entities.dto.CategoryListDTO;
+import com.devsuperior.auladev.entities.dto.CategoryRequestDTO;
 import com.devsuperior.auladev.entities.dto.CategoryResponseDTO;
 import com.devsuperior.auladev.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -25,7 +25,15 @@ public class CategoryResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryResponseDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<CategoryResponseDTO> insert(@PathVariable Long id) {
         return ResponseEntity.ok(categoryService.findById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<CategoryResponseDTO> insert(@RequestBody CategoryRequestDTO dto) {
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(dto.id()).toUri();
+
+        return ResponseEntity.created(uri).body(categoryService.insert(dto));
     }
 }

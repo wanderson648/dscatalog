@@ -2,6 +2,7 @@ package com.devsuperior.auladev.service;
 
 import com.devsuperior.auladev.entities.Category;
 import com.devsuperior.auladev.entities.dto.CategoryListDTO;
+import com.devsuperior.auladev.entities.dto.CategoryRequestDTO;
 import com.devsuperior.auladev.entities.dto.CategoryResponseDTO;
 import com.devsuperior.auladev.exception.EntityNotFoundException;
 import com.devsuperior.auladev.repositories.CategoryRepository;
@@ -34,6 +35,13 @@ public class CategoryService {
             throw new EntityNotFoundException("Category not found");
         }
         Category category = obj.get();
+        return new CategoryResponseDTO(category);
+    }
+
+    @Transactional
+    public CategoryResponseDTO insert(CategoryRequestDTO dto) {
+        Category category = new Category(dto);
+        categoryRepository.save(category);
         return new CategoryResponseDTO(category);
     }
 }

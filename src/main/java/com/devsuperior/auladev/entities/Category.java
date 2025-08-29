@@ -1,5 +1,6 @@
 package com.devsuperior.auladev.entities;
 
+import com.devsuperior.auladev.entities.dto.CategoryRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +27,11 @@ public class Category implements Serializable {
     private String name;
 
     private LocalDateTime createdAt;
+
+    public Category(CategoryRequestDTO dto) {
+        name = dto.name();
+        createdAt = LocalDateTime.now();
+    }
 
     @Override
     public boolean equals(Object o) {
