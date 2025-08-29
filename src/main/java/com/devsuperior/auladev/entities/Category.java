@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Objects;
 
 @Getter
@@ -26,12 +26,15 @@ public class Category implements Serializable {
     private Long id;
     private String name;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant createdAt;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant updatedAt;
 
     public Category(CategoryRequestDTO dto) {
         name = dto.name();
-        createdAt = LocalDateTime.now();
+        createdAt = Instant.now();
     }
 
     @Override
@@ -48,6 +51,6 @@ public class Category implements Serializable {
 
     public void update(CategoryRequestDTO dto) {
         name = dto.name();
-        updatedAt = LocalDateTime.now();
+        updatedAt = Instant.now();
     }
 }

@@ -27,7 +27,7 @@ public class CategoryService {
         return categoryRepository.findAll()
                 .stream()
                 .map(cat -> new CategoryListDTO(cat.getId(),
-                        cat.getName(), cat.getCreatedAt())).toList();
+                        cat.getName())).toList();
     }
 
 
