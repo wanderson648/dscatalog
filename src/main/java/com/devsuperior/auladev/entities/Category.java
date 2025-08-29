@@ -27,6 +27,7 @@ public class Category implements Serializable {
     private String name;
 
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public Category(CategoryRequestDTO dto) {
         name = dto.name();
@@ -43,5 +44,10 @@ public class Category implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());
+    }
+
+    public void update(CategoryRequestDTO dto) {
+        name = dto.name();
+        updatedAt = LocalDateTime.now();
     }
 }

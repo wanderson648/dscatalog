@@ -4,8 +4,9 @@ import com.devsuperior.auladev.entities.Category;
 import com.devsuperior.auladev.entities.dto.CategoryListDTO;
 import com.devsuperior.auladev.entities.dto.CategoryRequestDTO;
 import com.devsuperior.auladev.entities.dto.CategoryResponseDTO;
-import com.devsuperior.auladev.exception.EntityNotFoundException;
+import com.devsuperior.auladev.exception.ResourceNotFoundException;
 import com.devsuperior.auladev.repositories.CategoryRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,7 @@ public class CategoryService {
         return categoryRepository.findAll()
                 .stream()
                 .map(cat -> new CategoryListDTO(cat.getId(),
-                                cat.getName(), cat.getCreatedAt())).toList();
+                        cat.getName(), cat.getCreatedAt())).toList();
     }
 
 
@@ -32,7 +33,7 @@ public class CategoryService {
     public CategoryResponseDTO findById(Long id) {
         Optional<Category> obj = categoryRepository.findById(id);
         if (obj.isEmpty()) {
-            throw new EntityNotFoundException("Category not found");
+            throw new ResourceNotFoundException("Category not found");
         }
         Category category = obj.get();
         return new CategoryResponseDTO(category);
@@ -43,5 +44,16 @@ public class CategoryService {
         Category category = new Category(dto);
         categoryRepository.save(category);
         return new CategoryResponseDTO(category);
+    }
+
+    @Transactional
+    public CategoryResponseDTO update(Long id, CategoryRequestDTO dto) {
+        try {
+            Category category = categoryRepository.getReferenceById(id);
+            category.update(dto);
+            return new CategoryResponseDTO(category);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("id not found: " + id);
+        }
     }
 }
