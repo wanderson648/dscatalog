@@ -1,12 +1,15 @@
 package com.devsuperior.auladev.service;
 
+import com.devsuperior.auladev.entities.Category;
 import com.devsuperior.auladev.entities.dto.CategoryListDTO;
+import com.devsuperior.auladev.entities.dto.CategoryResponseDTO;
 import com.devsuperior.auladev.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,5 +23,16 @@ public class CategoryService {
                 .stream()
                 .map(cat -> new CategoryListDTO(cat.getId(),
                                 cat.getName(), cat.getCreatedAt())).toList();
+    }
+
+
+    @Transactional(readOnly = true)
+    public CategoryResponseDTO findById(Long id) {
+        Optional<Category> obj = categoryRepository.findById(id);
+        if (obj.isEmpty()) {
+            throw new RuntimeException("Category not found");
+        }
+        Category category = obj.get();
+        return new CategoryResponseDTO(category);
     }
 }
