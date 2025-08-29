@@ -1,6 +1,7 @@
 package com.devsuperior.auladev.resources;
 
 import com.devsuperior.auladev.entities.Category;
+import com.devsuperior.auladev.entities.dto.CategoryListDTO;
 import com.devsuperior.auladev.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class CategoryResource {
     private final CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<Category>> findAll() {
+    public ResponseEntity<List<CategoryListDTO>> findAll() {
         return ResponseEntity.ok(categoryService.findAll());
     }
 }
