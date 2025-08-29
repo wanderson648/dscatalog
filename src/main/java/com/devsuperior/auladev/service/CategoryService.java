@@ -3,6 +3,7 @@ package com.devsuperior.auladev.service;
 import com.devsuperior.auladev.entities.Category;
 import com.devsuperior.auladev.entities.dto.CategoryListDTO;
 import com.devsuperior.auladev.entities.dto.CategoryResponseDTO;
+import com.devsuperior.auladev.exception.EntityNotFoundException;
 import com.devsuperior.auladev.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class CategoryService {
     public CategoryResponseDTO findById(Long id) {
         Optional<Category> obj = categoryRepository.findById(id);
         if (obj.isEmpty()) {
-            throw new RuntimeException("Category not found");
+            throw new EntityNotFoundException("Category not found");
         }
         Category category = obj.get();
         return new CategoryResponseDTO(category);
