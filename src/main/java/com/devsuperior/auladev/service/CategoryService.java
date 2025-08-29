@@ -10,10 +10,11 @@ import com.devsuperior.auladev.repositories.CategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,11 +24,10 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
-    public List<CategoryListDTO> findAll() {
-        return categoryRepository.findAll()
-                .stream()
+    public Page<CategoryListDTO> findAll(Pageable pageable) {
+        return categoryRepository.findAll(pageable)
                 .map(cat -> new CategoryListDTO(cat.getId(),
-                        cat.getName())).toList();
+                        cat.getName()));
     }
 
 

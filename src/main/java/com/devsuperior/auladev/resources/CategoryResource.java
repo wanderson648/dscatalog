@@ -5,12 +5,13 @@ import com.devsuperior.auladev.entities.dto.CategoryRequestDTO;
 import com.devsuperior.auladev.entities.dto.CategoryResponseDTO;
 import com.devsuperior.auladev.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
@@ -20,8 +21,8 @@ public class CategoryResource {
     private final CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<CategoryListDTO>> findAll() {
-        return ResponseEntity.ok(categoryService.findAll());
+    public ResponseEntity<Page<CategoryListDTO>> findAll(Pageable pageable) {
+        return ResponseEntity.ok(categoryService.findAll(pageable));
     }
 
     @GetMapping("/{id}")
