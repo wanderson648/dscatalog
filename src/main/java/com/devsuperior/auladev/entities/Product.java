@@ -1,5 +1,6 @@
 package com.devsuperior.auladev.entities;
 
+import com.devsuperior.auladev.entities.dto.ProductDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -45,6 +46,14 @@ public class Product implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     Set<Category> categories = new HashSet<>();
 
+    public Product(ProductDTO dto) {
+        this.name = dto.getName();
+        this.description = dto.getDescription();
+        this.price = dto.getPrice();
+        this.imgUrl = dto.getImgUrl();
+        this.date = Instant.now();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -55,5 +64,13 @@ public class Product implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());
+    }
+
+    public void update(ProductDTO dto) {
+        this.name = dto.getName();
+        this.description = dto.getDescription();
+        this.price = dto.getPrice();
+        this.imgUrl = dto.getImgUrl();
+        this.date = Instant.now();
     }
 }
