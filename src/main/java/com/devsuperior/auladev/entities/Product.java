@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -52,6 +54,15 @@ public class Product implements Serializable {
         this.price = dto.getPrice();
         this.imgUrl = dto.getImgUrl();
         this.date = Instant.now();
+    }
+
+    public Product(long id, String name, double price, Instant data, String description, String img) {
+         this.id = id;
+         this.name = name;
+         this.price = price;
+         this.date = data;
+         this.description = description;
+         this.imgUrl = img;
     }
 
     @Override
