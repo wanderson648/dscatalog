@@ -42,6 +42,11 @@ public class Category implements Serializable {
         createdAt = Instant.now();
     }
 
+    public Category(Long id, String name) {
+       this.id = id;
+       this.name = name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
