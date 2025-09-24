@@ -1,6 +1,5 @@
 package com.devsuperior.auladev.entities;
 
-import com.devsuperior.auladev.entities.dto.RoleDTO;
 import com.devsuperior.auladev.entities.dto.UserDTO;
 import com.devsuperior.auladev.entities.dto.UserInsertDTO;
 import jakarta.persistence.*;
