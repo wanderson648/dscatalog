@@ -4,6 +4,7 @@ import com.devsuperior.auladev.entities.dto.CategoryListDTO;
 import com.devsuperior.auladev.entities.dto.CategoryRequestDTO;
 import com.devsuperior.auladev.entities.dto.CategoryResponseDTO;
 import com.devsuperior.auladev.service.CategoryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,7 +32,7 @@ public class CategoryResource {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryResponseDTO> insert(@RequestBody CategoryRequestDTO dto) {
+    public ResponseEntity<CategoryResponseDTO> insert(@Valid @RequestBody CategoryRequestDTO dto) {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.id()).toUri();
 
@@ -39,7 +40,7 @@ public class CategoryResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryResponseDTO> update(@PathVariable Long id,
+    public ResponseEntity<CategoryResponseDTO> update(@Valid @PathVariable Long id,
                                                       @RequestBody CategoryRequestDTO dto) {
         return ResponseEntity.ok(categoryService.update(id, dto));
     }

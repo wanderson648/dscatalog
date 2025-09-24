@@ -2,6 +2,7 @@ package com.devsuperior.auladev.resources;
 
 import com.devsuperior.auladev.entities.dto.ProductDTO;
 import com.devsuperior.auladev.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +30,7 @@ public class ProductResource {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO dto) {
+    public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductDTO dto) {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
 
@@ -37,7 +38,7 @@ public class ProductResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDTO> update(@PathVariable Long id,
+    public ResponseEntity<ProductDTO> update(@Valid @PathVariable Long id,
                                                       @RequestBody ProductDTO dto) {
         return ResponseEntity.ok(productService.update(id, dto));
     }

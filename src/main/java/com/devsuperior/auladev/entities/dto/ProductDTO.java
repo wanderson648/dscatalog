@@ -2,6 +2,10 @@ package com.devsuperior.auladev.entities.dto;
 
 import com.devsuperior.auladev.entities.Category;
 import com.devsuperior.auladev.entities.Product;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,10 +22,20 @@ import java.util.Set;
 @NoArgsConstructor
 public class ProductDTO {
     private Long id;
+
+    @Size(min = 5, max = 60, message = "O nome deve ter entre 5 e 60 caracteres")
+    @NotBlank(message = "Campo obrigatório")
     private String name;
+
+    @NotBlank(message = "Campo obrigatório")
     private String description;
+
+    @Positive(message = "Preço deve ser um valor positivo")
     private Double price;
+
     private String imgUrl;
+
+    @PastOrPresent(message = "A data do produto não pode ser futura")
     private Instant date;
     private List<CategoryResponseDTO> categories = new ArrayList<>();
 
