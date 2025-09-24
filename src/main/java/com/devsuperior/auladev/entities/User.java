@@ -1,6 +1,5 @@
-package com.devsuperior.auladev.entities.dto;
+package com.devsuperior.auladev.entities;
 
-import com.devsuperior.auladev.entities.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,6 +33,11 @@ public class User implements Serializable {
 
     private String password;
 
+    @ManyToMany
+    @JoinTable(
+            name = "tb_user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
     @Override
