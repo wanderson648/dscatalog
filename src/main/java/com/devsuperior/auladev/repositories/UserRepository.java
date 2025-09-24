@@ -1,0 +1,7 @@
+package com.devsuperior.auladev.repositories;
+
+import com.devsuperior.auladev.entities.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+}

@@ -1,9 +1,12 @@
 package com.devsuperior.auladev.entities;
 
+import com.devsuperior.auladev.entities.dto.RoleDTO;
+import com.devsuperior.auladev.entities.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.boot.jaxb.hbm.internal.GenerationTimingConverter;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -33,12 +36,19 @@ public class User implements Serializable {
 
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "tb_user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    public User(UserDTO dto) {
+        this.id = dto.getId();
+        this.firstName = dto.getFirstName();
+        this.lastName = dto.getLastName();
+        this.email = dto.getEmail();
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -50,5 +60,12 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());
+    }
+
+    public void update(UserDTO dto, Role role) {
+        firstName = dto.getFirstName();
+        lastName = dto.getLastName();
+        email = dto.getEmail();
+        roles.add(role);
     }
 }
