@@ -2,11 +2,11 @@ package com.devsuperior.auladev.entities;
 
 import com.devsuperior.auladev.entities.dto.RoleDTO;
 import com.devsuperior.auladev.entities.dto.UserDTO;
+import com.devsuperior.auladev.entities.dto.UserInsertDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.boot.jaxb.hbm.internal.GenerationTimingConverter;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -32,6 +32,7 @@ public class User implements Serializable {
 
     private String lastName;
 
+    @Column(unique = true)
     private String email;
 
     private String password;
@@ -43,11 +44,11 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public User(UserDTO dto) {
-        this.id = dto.getId();
-        this.firstName = dto.getFirstName();
-        this.lastName = dto.getLastName();
-        this.email = dto.getEmail();
+    public User(UserInsertDTO dto, String encodePassword) {
+        firstName = dto.getFirstName();
+        lastName = dto.getLastName();
+        email = dto.getEmail();
+        password = encodePassword;
     }
 
     @Override

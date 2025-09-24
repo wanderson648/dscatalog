@@ -1,7 +1,6 @@
 package com.devsuperior.auladev.entities.dto;
 
 
-import com.devsuperior.auladev.entities.Role;
 import com.devsuperior.auladev.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

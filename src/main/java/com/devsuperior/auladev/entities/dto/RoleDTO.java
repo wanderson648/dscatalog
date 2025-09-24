@@ -1,13 +1,23 @@
 package com.devsuperior.auladev.entities.dto;
 
 import com.devsuperior.auladev.entities.Role;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public record RoleDTO(
-        Long id,
-        String authority
-) {
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class RoleDTO {
+
+    private Long id;
+    private String authority;
 
     public RoleDTO(Role role) {
-        this(role.getId(), role.getAuthority());
+        super();
+        this.id = role.getId();
+        this.authority = role.getAuthority();
     }
 }

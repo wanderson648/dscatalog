@@ -3,6 +3,7 @@ package com.devsuperior.auladev.service;
 import com.devsuperior.auladev.entities.Role;
 import com.devsuperior.auladev.entities.User;
 import com.devsuperior.auladev.entities.dto.UserDTO;
+import com.devsuperior.auladev.entities.dto.UserInsertDTO;
 import com.devsuperior.auladev.exception.DatabaseException;
 import com.devsuperior.auladev.exception.ResourceNotFoundException;
 import com.devsuperior.auladev.repositories.RoleRepository;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
     public Page<UserDTO> findAll(Pageable pageable) {
@@ -42,8 +45,15 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO insert(UserDTO dto) {
-        User user = new User(dto);
+    public UserDTO insert(UserInsertDTO dto) {
+        String encodePassword = passwordEncoder.encode(dto.getPassword());
+        User user = new User(dto, encodePassword);
+
+        dto.getRoles().forEach(roleDTO -> {
+            Role role = roleRepository.getReferenceById(roleDTO.getId());
+            user.getRoles().add(role);
+        });
+
         userRepository.save(user);
         return new UserDTO(user);
     }
