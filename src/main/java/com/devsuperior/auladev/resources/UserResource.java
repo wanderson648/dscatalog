@@ -2,6 +2,7 @@ package com.devsuperior.auladev.resources;
 
 import com.devsuperior.auladev.entities.dto.UserDTO;
 import com.devsuperior.auladev.entities.dto.UserInsertDTO;
+import com.devsuperior.auladev.entities.dto.UserUpdateDTO;
 import com.devsuperior.auladev.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +41,7 @@ public class UserResource {
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO> update(@Valid @PathVariable Long id,
-                                                      @RequestBody UserDTO dto) {
+                                                      @RequestBody UserUpdateDTO dto) {
         return ResponseEntity.ok(userService.update(id, dto));
     }
 

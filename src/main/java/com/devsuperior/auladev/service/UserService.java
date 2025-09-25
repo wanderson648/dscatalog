@@ -4,6 +4,7 @@ import com.devsuperior.auladev.entities.Role;
 import com.devsuperior.auladev.entities.User;
 import com.devsuperior.auladev.entities.dto.UserDTO;
 import com.devsuperior.auladev.entities.dto.UserInsertDTO;
+import com.devsuperior.auladev.entities.dto.UserUpdateDTO;
 import com.devsuperior.auladev.exception.DatabaseException;
 import com.devsuperior.auladev.exception.ResourceNotFoundException;
 import com.devsuperior.auladev.repositories.RoleRepository;
@@ -59,7 +60,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO update(Long id, UserDTO dto) {
+    public UserDTO update(Long id, UserUpdateDTO dto) {
         try {
             User user = userRepository.getReferenceById(id);
             Role role = roleRepository.getReferenceById(user.getId());
