@@ -50,6 +50,10 @@ public class User implements Serializable {
         password = encodePassword;
     }
 
+    public boolean hasRole(String roleName) {
+        return roles.stream().anyMatch(role -> role.getAuthority().equals(roleName));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
