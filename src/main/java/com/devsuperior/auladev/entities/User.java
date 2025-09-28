@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,6 +15,7 @@ import java.io.Serializable;
 import java.util.*;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -36,7 +38,7 @@ public class User implements Serializable, UserDetails {
 
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
             name = "tb_user_role",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -52,6 +54,10 @@ public class User implements Serializable, UserDetails {
 
     public boolean hasRole(String roleName) {
         return roles.stream().anyMatch(role -> role.getAuthority().equals(roleName));
+    }
+
+    public void addRole(Role role) {
+        roles.add(role);
     }
 
     @Override
@@ -102,4 +108,6 @@ public class User implements Serializable, UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }

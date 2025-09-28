@@ -2,7 +2,6 @@ package com.devsuperior.auladev.entities.dto;
 
 
 import com.devsuperior.auladev.entities.User;
-import com.devsuperior.auladev.service.validation.UserInsertValid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
